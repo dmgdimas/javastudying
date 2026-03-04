@@ -1,6 +1,21 @@
-public class B implements Runnable{
+public class B extends Thread{ 
+    // может наследоваться от класса Thread или реализовывать интерфейс Runnable,
+    //  но не оба одновременно
+    //  при наследовании от класса Thread, мы не можем наследоваться от другого класса,
+    //  а при реализации интерфейса Runnable, мы можем наследоваться от другого класса
+
+    @Override
+    synchronized public void start() { // synchronized - синхронизация метода, чтобы избежать проблем с многопоточностью
+        // synchronized - блокирует доступ к методу для других потоков, пока текущий поток не завершит выполнение метода
+        // используется для важных потоков, которые должны выполняться в определенном порядке, чтобы избежать проблем с многопоточностью
+        // метод start() - запускает поток, вызывает метод run() в новом потоке
+        System.out.println("B: " + Thread.currentThread().getName() + " started!");
+        super.start();
+    }
     @Override
     public void run() {
-        System.out.println("B: " + Thread.currentThread().getName());
+        // метод run() - содержит код, который будет выполняться в новом потоке
+        System.out.println("B: " + Thread.currentThread().getName() + " run!");
+        super.run();
     }
 }
